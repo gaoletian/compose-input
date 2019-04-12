@@ -9,13 +9,6 @@ template
           :define="searchFormDefine"
           :col-props="searchFromColProps"
   ></compose-input>
-
-  <compose-input 
-          v-model="searchFormValue"
-          :gutter="40"
-          :define="searchFormDefine"
-          :col-props="searchFromColProps"
-  ></compose-input>
 </el-form>
 ```
 script
