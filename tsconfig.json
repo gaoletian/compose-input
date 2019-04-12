@@ -1,0 +1,36 @@
+{
+    "compilerOptions": {
+        "outDir": "lib",
+        "target": "es5",
+        "module": "umd",
+        "strict": false,
+        "noImplicitThis": true,
+        "allowJs": true,
+        "jsx": "preserve",
+        "importHelpers": false,
+        "moduleResolution": "node",
+        "experimentalDecorators": false,
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
+        "sourceMap": true,
+        "baseUrl": ".",
+        "types": [],
+        "paths": {
+            "@/*": [
+                "src/*"
+            ]
+        },
+        "lib": [
+            "esnext",
+            "dom",
+            "dom.iterable",
+            "scripthost"
+        ]
+    },
+    "files": [
+        "src/compose-input.js",
+    ],
+    "exclude": [
+        "node_modules"
+    ]
+}

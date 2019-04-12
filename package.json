@@ -1,0 +1,20 @@
+{
+  "name": "compose-input",
+  "version": "1.0.1",
+  "description": "compose el-input el-select el-switch el-radio el-rate ",
+  "main": "lib/compose-input.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc -p tsconfig.json"
+  },
+  "keywords": [],
+  "author": "gaoletian",
+  "license": "ISC",
+  "peerDependencies": {
+    "vue": "^2.6.10",
+    "element-ui": "^2.7.2"
+  },
+  "devDependencies": {
+    "typescript": "^3.4.3"
+  }
+}
