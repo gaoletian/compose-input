@@ -1,5 +1,12 @@
 # compose-input for element-ui
 
+## 安装 
+```bash
+npm install compose-input
+```
+
+
+
 template
 ```html
 <el-form size="mini" label-position="top" label-width="100px" @submit.native.prevent>
