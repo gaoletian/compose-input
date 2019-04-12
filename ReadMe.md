@@ -58,7 +58,8 @@ script
 级联 el-select 动态构建 el-options的数据源
 ```
 **span** `?: number | number[]`;
-```js
+
+```
 /**
   * 列宽 el-col 的 span 属性, 如果没有指定将根据 define 的元素个数来计算
   * 如： 8  一行3列
@@ -66,6 +67,7 @@ script
   */
 ```
 **gutter** ?: number
+
     /**
       * 栅格间距 el-row 的 gutter 属性 默认 16
       */
@@ -121,14 +123,16 @@ script
     */
 
 **optionsKeyName**?: string;
+
 **lableKeyName**?: string;
+
 **valueKeyName**?: string;
 
     /**
     * 以上三项在动态构建 option 菜单时需要，需要在 compose-input 中指定 dataSource
     */
 
-**formItemProps**?: OmitVueProp<FormItem>;
+**formItemProps**?: object;
 
     /**
     * el-form-item 属性透传 覆盖组件属性中定义的 通用 formItemProps
