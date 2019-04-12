@@ -44,96 +44,110 @@ script
 
 ## 组件属性
 
+**define** `!: (DefineItem|DefineItemFn)[]`  
 ```ts
-    /** 
-     * 组件结构定义 
-     */
-    define: DefineItem[];
-    /** 
-     * 级联 el-select 动态构建 el-options的数据源
-     */
-    dataSource?: {[key: string]: any;}[];
-
+组件结构定义
+例如： 
+[
+  {type: 'el-input'},
+  {type: 'el-select', options: [1,2,3]},
+]
+```
+**dataSource** `object[]`
+```
+级联 el-select 动态构建 el-options的数据源
+```
+**span** `?: number | number[]`;
+```js
+/**
+  * 列宽 el-col 的 span 属性, 如果没有指定将根据 define 的元素个数来计算
+  * 如： 8  一行3列
+  * [12, 6, 6] 分别指定三列宽度
+  */
+```
+**gutter** ?: number
     /**
-     * 列宽 el-col 的 span 属性, 如果没有指定将根据 define 的元素个数来计算
-     */
-    span?: number;
+      * 栅格间距 el-row 的 gutter 属性 默认 16
+      */
 
-    /**
-     * 栅格间距 el-row 的 gutter 属性 默认 16
-     */
-    gutter?: number;
+**noFormItem** ?: boolean;
 
     /**
      * 是否使用 el-form-item包装动态表单组件 默认为使用
      * 用法：no-form-item
      */
-    noFormItem?: boolean;
+    
+**formItemProps** ?: object;
 
     /**
      * 通用 el-form-item 属性
      */
-    formItemProps?: {
-        [key: string]: any;
-    };
+
+**colProps** ?: object;
 
     /**
      * 通用 el-col 属性
      */
-    colProps?: {
-        [key: string]: any;
-    };
-```
+
 
 ## DefineItem 类型
 
-```ts
-  /**
-   * 组件类型
-   * 可选 'el-input' | 'el-select' | 'el-switch' | 'el-slider' | 'el-radio'| 'el-date-picker' | 'el-time-select' | 'el-checkbox'
-  */
-  type: string;
+**type**: string
 
-  /**
-   * 动态组件属性 与 type 相匹配动态组件的属性，用于属性透传
-   **/ 
-  props: {[key: string]: any};
+    /**
+    * 组件类型
+    * 'el-input' | 'el-select' | 'el-switch' | 
+    * 'el-slider' | 'el-radio'| 'el-date-picker' | 'el-time-select' | 'el-checkbox'
+    */
 
-  /**
-   * el-select  options 属性提升
-   * type 为 el-select 时有效
-   */
-  options?: {
-    label: string;
-    value?: any;
-    disabled?: true | false;
-  }[];
-  /**
-   * 父级索引, define属性中定义的动态组件的索引序号，选项跟随父组件的值变化，当做级联选择时非常有用
-   */
-  parentIndex?: number;
-  /**
-   * 以下三项在动态构建 option 菜单时需要，需要在 compose-input 中指定 dataSource
-   */
-  optionsKeyName?: string;
-  lableKeyName?: string;
-  valueKeyName?: string;
-  /**
-   * el-form-item 属性透传 覆盖组件属性中定义的 通用 formItemProps
-   */
-  formItemProps?: OmitVueProp<FormItem>;
-  /**
-   * el-col 属性透传 覆盖组件属性中定义的 通用 colProps
-   */
-  colProps?: OmitVueProp<Col>;
-  /**
-   * el-form-item 的 label属性提升
-   */
-  label?: string;
-```
+**props**: {[key: string]: any};
+
+    /**
+     * 动态组件属性 与 type 相匹配动态组件的属性，用于属性透传
+     */ 
+
+**options**?: { label: string; value?: any; disabled?: true | false; }[];
+
+    /**
+    * el-select  options 属性提升
+    * type 为 el-select 时有效
+    */
+
+**parentIndex**?: number;
+
+    /**
+    * 父级索引, define属性中定义的动态组件的索引序号，
+    * 选项跟随父组件的值变化，当做级联选择时非常有用
+    */
+
+**optionsKeyName**?: string;
+**lableKeyName**?: string;
+**valueKeyName**?: string;
+
+    /**
+    * 以上三项在动态构建 option 菜单时需要，需要在 compose-input 中指定 dataSource
+    */
+
+**formItemProps**?: OmitVueProp<FormItem>;
+
+    /**
+    * el-form-item 属性透传 覆盖组件属性中定义的 通用 formItemProps
+    */
+
+**colProps**?: OmitVueProp<Col>;
+
+    /**
+    * el-col 属性透传 覆盖组件属性中定义的 通用 colProps
+    */
+
+**label**?: string;  
+
+    /**
+    * el-form-item 的 label属性提升
+    */
 
 
-## example typescript
+## example
 
 ```html
 <template>
