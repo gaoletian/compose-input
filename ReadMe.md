@@ -44,7 +44,7 @@ script
 
 ## 组件属性
 
-**define** `!: (DefineItem|DefineItemFn)[]`  
+**define** !: (DefineItem|DefineItemFn)[]
 ```ts
 组件结构定义
 例如： 
@@ -53,11 +53,11 @@ script
   {type: 'el-select', options: [1,2,3]},
 ]
 ```
-**dataSource** `object[]`
+**dataSource** ?: object[]
 ```
 级联 el-select 动态构建 el-options的数据源
 ```
-**span** `?: number | number[]`;
+**span** ?: number | number[]
 
 ```
 /**
@@ -72,20 +72,20 @@ script
       * 栅格间距 el-row 的 gutter 属性 默认 16
       */
 
-**noFormItem** ?: boolean;
+**noFormItem** ?: boolean
 
     /**
      * 是否使用 el-form-item包装动态表单组件 默认为使用
      * 用法：no-form-item
      */
     
-**formItemProps** ?: object;
+**formItemProps** ?: object
 
     /**
      * 通用 el-form-item 属性
      */
 
-**colProps** ?: object;
+**colProps** ?: object
 
     /**
      * 通用 el-col 属性
