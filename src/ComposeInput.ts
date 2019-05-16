@@ -1,10 +1,21 @@
 import { Component, Vue, Prop, Model } from 'vue-property-decorator';
 import { CreateElement, VNode } from 'vue';
-// prettier-ignore
-import { 
-  FormItem, Col, DatePicker, Slider, Switch, Checkbox, Rate, 
-  RadioGroup, Radio, TimeSelect, InputNumber, Input, Select 
+import {
+  FormItem,
+  Col,
+  DatePicker,
+  Slider,
+  Switch,
+  Checkbox,
+  Rate,
+  RadioGroup,
+  Radio,
+  TimeSelect,
+  InputNumber,
+  Input,
+  Select,
 } from 'element-ui/types';
+
 type Omit<T, K> = Pick<T, Exclude<keyof T, K>>;
 type OmitVueProp<T> = Partial<Omit<T, keyof Vue>>;
 
@@ -38,7 +49,7 @@ type DefineItemCommon = {
 };
 
 type DefineInput = { type: 'el-input'; props?: OmitVueProp<Input> & { clearable?: boolean } };
-type DefineSelect = { type: 'el-select'; props?: OmitVueProp<Select> & { multiple?: boolean } };
+type DefineSelect = { type: 'el-select'; props?: OmitVueProp<Select> } & { multiple?: boolean };
 type DefineDatePicker = { type: 'el-date-picker'; props?: OmitVueProp<DatePicker> };
 type DefineTimeSelect = { type: 'el-time-select'; props?: OmitVueProp<TimeSelect> };
 type DefineInputNumber = { type: 'el-input-number'; props?: OmitVueProp<InputNumber> };
@@ -62,25 +73,46 @@ export type DefineItem = (
   | DefineSwitch
   | DefineSlider) &
   DefineItemCommon;
-
 export type DefineItemFn = (vm: ComposeInput, index: number) => DefineItem;
 
-@Component({ name: 'compose-input' })
+export type ColProps = OmitVueProp<Col>;
+export type FormItemProps = OmitVueProp<FormItem>;
+
+const RadioGroupHoc = {
+  functional: true,
+  render(h: CreateElement, { data, props }) {
+    const { options = [], type = '' } = props;
+    let elTag = !!type && type === 'button' ? 'el-radio-button' : 'el-radio';
+    const children = (options as string[]).map(it => h(elTag, { props: { label: it } })) || [];
+    return h('el-radio-group', data, children);
+  },
+};
+
+@Component({
+  name: 'ComposeInput',
+  components: { RadioGroupHoc },
+})
 export default class ComposeInput extends Vue {
+  /**
+   * 组件结构定义
+   */
   @Prop({ required: true, type: Array })
   define!: DefineItem[];
 
+  /**
+   * 动态构建 el-options 的数据源
+   */
   @Prop({ type: Array })
   dataSource?: { [key: string]: any }[];
 
   /**
-   * 列宽 el-col 的 span 属性, 如果没有指定将根据 define 的元素个数来计算
+   * 列宽控制
    */
   @Prop({ required: false })
   span?: number;
 
   /**
-   * 栅格间距 el-row 的 gutter 属性 默认 16
+   * 栅格间距
    */
   @Prop({ type: Number, default: 16 })
   gutter?: number;
@@ -137,19 +169,14 @@ export default class ComposeInput extends Vue {
       const parentValue = this.value[parentIndex];
       const parentValueKeyName = parentDefine.valueKeyName;
       const parentData = this.dataSource.find(it => it[parentValueKeyName] === parentValue);
-      // 如果指定的 optionsKeyName 不是数组，则返回空数组
+
       if (!Array.isArray(parentData[optionsKeyName])) {
         return [];
       }
-      // 如果指定了 lableKeyName 和 valueKeyName
-      if (lableKeyName && valueKeyName) {
-        return parentData[optionsKeyName].map(it => ({
-          label: it[lableKeyName],
-          value: it[valueKeyName],
-        }));
-      } else {
-        return parentData[optionsKeyName];
-      }
+      return parentData[optionsKeyName].map(it => ({
+        label: it[lableKeyName],
+        value: it[valueKeyName],
+      }));
     }
     return this.dataSource.map(it => ({
       label: it[lableKeyName],
@@ -218,12 +245,15 @@ export default class ComposeInput extends Vue {
           if (['el-input-number', 'el-slider', 'el-select'].includes(_item.type)) {
             return;
           }
+
+          console.log('==== input ====> ', _item.type, val);
           self.value[index] = val;
           self.$emit('input', self.value);
           self.$forceUpdate();
         },
         change(val) {
           if (['el-time-select', 'el-date-picker', 'el-input'].includes(_item.type)) return;
+          console.log('==== change ====> ', _item.type, val);
           self.value[index] = val;
           self.$emit('input', self.value);
           self.$forceUpdate();
@@ -234,6 +264,7 @@ export default class ComposeInput extends Vue {
   }
 
   render(h: CreateElement) {
+    console.log('==ComposeInput=>  render');
     const gutter = this.gutter;
     const type = 'flex';
     return h(
